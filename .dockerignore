@@ -1,0 +1,31 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+
+# Local environment variables
+.env
+
+# SQLite DB and backups
+bot.db
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+
+# OS/IDE files
+.DS_Store
+.idea/
+.vscode/
+
+# Python packaging
+build/
+dist/
+*.egg-info/
+
+# Docker
+*.log

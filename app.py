@@ -10,7 +10,7 @@ DEFAULT_LOCALE = os.getenv("DEFAULT_LOCALE", "vi_VN")
 TG_API = f"https://api.telegram.org/bot{BOT_TOKEN}"
 
 app = Flask(__name__)
-DB_PATH = "bot.db"
+DB_PATH = os.getenv("DB_PATH", "bot.db")
 
 # --------- DB helpers ---------
 def db():
@@ -34,6 +34,14 @@ def init_db():
         updated_at INTEGER
     )""")
     conn.commit(); conn.close()
+
+# 在首次请求前确保数据库已初始化（容器化/WSGI 下不会触发 __main__）
+@app.before_first_request
+def _init_db_once():
+    try:
+        init_db()
+    except Exception as e:
+        app.logger.error(f"DB init failed: {e}")
 
 def upsert_user(chat_id, **kwargs):
     conn = db()

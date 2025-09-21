@@ -1,0 +1,18 @@
+services:
+  bot:
+    build: .
+    container_name: tele_bot
+    restart: unless-stopped
+    environment:
+      - BOT_TOKEN=${BOT_TOKEN}
+      - HTTPS_URL=${HTTPS_URL}
+      - DEFAULT_LOCALE=${DEFAULT_LOCALE:-vi_VN}
+      - DB_PATH=/data/bot.db
+    ports:
+      - "5000:5000"
+    volumes:
+      - bot_data:/data
+    # 如果你的机器上要直接访问 Telegram API，确保宿主机能连外网
+
+volumes:
+  bot_data:
